@@ -36,19 +36,19 @@ for row in range(4):
 plt.tight_layout()
 plt.show()
 
-#visualising the hog 
-unique_digits = np.arange(10)  # Digits 0 to 9
-selected_images = []
+# visualising the hog 
+digits = np.arange(10)  
+images = []
 
-for digit in unique_digits:
+for digit in digits:
     index = np.where(y_train == digit)[0][0]  
-    selected_images.append(x_train[index])  
+    images.append(x_train[index])  
 
 
 fig, axes = plt.subplots(5, 4, figsize=(8, 6))
 
-for i, digit in enumerate(unique_digits):
-    hog_features, hog_image = hog(selected_images[i], orientations=9, pixels_per_cell=(8, 8),
+for i, digit in enumerate(digits):
+    hog_features, hog_image = hog(images[i], orientations=9, pixels_per_cell=(8, 8),
                                   cells_per_block=(2, 2), block_norm='L2-Hys',
                                   visualize=True)
 
@@ -57,7 +57,7 @@ for i, digit in enumerate(unique_digits):
 
 
     row, col = divmod(i, 2)  
-    axes[row, col * 2].imshow(selected_images[i], cmap='gray')
+    axes[row, col * 2].imshow(images[i], cmap='gray')
     axes[row, col * 2].set_title(f"Digit {digit}")
     axes[row, col * 2].axis("off")
 
@@ -68,3 +68,58 @@ for i, digit in enumerate(unique_digits):
 
 plt.tight_layout()
 plt.show()
+
+# exploring the data 
+
+num_train = x_train.shape[0]
+num_test = x_test.shape[0]
+total_samples = num_train + num_test
+
+
+unique_train, counts_train = np.unique(y_train, return_counts=True)
+unique_test, counts_test = np.unique(y_test, return_counts=True)
+
+
+total_counts = counts_train + counts_test
+
+
+df_distribution = pd.DataFrame({
+    'Digit': unique_train,
+    'Train Count': counts_train,
+    'Test Count': counts_test,
+    'Total Count': total_counts
+})
+
+
+print(f"Total number of images in dataset: {total_samples}")
+print(df_distribution)
+
+
+
+
+num_train = x_train.shape[0]
+num_test = x_test.shape[0]
+total_samples = num_train + num_test
+
+
+unique_train, counts_train = np.unique(y_train, return_counts=True)
+unique_test, counts_test = np.unique(y_test, return_counts=True)
+
+
+total_counts = counts_train + counts_test
+
+
+df_distribution = pd.DataFrame({
+    'Digit': unique_train,
+    'Train Count': counts_train,
+    'Test Count': counts_test,
+    'Total Count': total_counts
+})
+min_pixel_value = np.min(x_train)  
+max_pixel_value = np.max(x_train) 
+
+print(f"Shape a data point : {x_train[0].shape}")
+print(f"Minimum pixel value: {min_pixel_value}")
+print(f"Maximum pixel value: {max_pixel_value}")
+print(f"Total number of images in dataset: {total_samples}")
+print(df_distribution)
