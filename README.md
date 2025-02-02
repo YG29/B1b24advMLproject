@@ -1,6 +1,8 @@
 # B1b24advMLproject
 Handwritten Digit Recognition Task : A comparison based study
 
+All final codes on the main branch. 
+
 The feature extraction, baseline training, and CNN training are python files: 
 data_exploration.py
 DataPrepFeatureEngKNN.py
